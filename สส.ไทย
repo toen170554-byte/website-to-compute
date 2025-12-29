@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>จำลองสภาไทย 500 ที่นั่ง</title>
+<style>
+  body { font-family: "Noto Sans Thai", sans-serif; text-align: center; background: #f5f5f5; }
+  h1 { margin-top: 20px; }
+  #parliament { 
+    display: grid; 
+    grid-template-columns: repeat(25, 20px); 
+    gap: 3px; 
+    justify-content: center; 
+    margin-top: 20px;
+  }
+  .seat { width: 20px; height: 20px; border-radius: 50%; }
+  .A { background: #f94144; } /* พรรค A */
+  .B { background: #43aa8b; } /* พรรค B */
+  .C { background: #577590; } /* พรรค C */
+  .Empty { background: #ccc; }
+  .info { margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>จำลองสภาผู้แทนราษฎรไทย (500 ที่นั่ง)</h1>
+<div id="parliament"></div>
+
+<div class="info">
+  <p>พรรค A (เพื่อประชา): <span id="partyA">0</span> ที่นั่ง</p>
+  <p>พรรค B (เสรีไทย): <span id="partyB">0</span> ที่นั่ง</p>
+  <p>พรรค C (อนุรักษ์ชาติ): <span id="partyC">0</span> ที่นั่ง</p>
+</div>
+
+<script>
+const totalSeats = 500;
+const parliament = document.getElementById("parliament");
+
+// สุ่มจำนวนที่นั่งแต่ละพรรคให้รวมกันเท่ากับ 500
+let partyA = Math.floor(Math.random() * 200) + 50;
+let partyB = Math.floor(Math.random() * (500 - partyA - 50)) + 50;
+let partyC = 500 - (partyA + partyB);
+
+// อัปเดตจำนวนที่นั่งในข้อความ
+document.getElementById("partyA").textContent = partyA;
+document.getElementById("partyB").textContent = partyB;
+document.getElementById("partyC").textContent = partyC;
+
+// สร้างที่นั่งทั้งหมด 500 จุด
+for (let i = 0; i < totalSeats; i++) {
+  const seat = document.createElement("div");
+  seat.classList.add("seat");
+  if (i < partyA) seat.classList.add("A");
+  else if (i < partyA + partyB) seat.classList.add("B");
+  else seat.classList.add("C");
+  parliament.appendChild(seat);
+}
+</script>
+
+</body>
+</html>
